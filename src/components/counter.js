@@ -1,17 +1,18 @@
 import React from "react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
+import { inc, dec, rnd } from "../actions";
 
 const Counter = ({ counter, inc, dec, rnd }) => {
   return (
-    <div class="jumbotron">
+    <div className="jumbotron">
       <h2>{counter}</h2>
-      <button onClick={inc} class="btn btn-primary btn-lg">
+      <button onClick={dec} className="btn btn-primary btn-lg">
         DEC
       </button>
-      <button onClick={dec} class="btn btn-primary btn-lg">
+      <button onClick={inc} className="btn btn-primary btn-lg">
         INC
       </button>
-      <button onClick={rnd} class="btn btn-primary btn-lg">
+      <button onClick={rnd} className="btn btn-primary btn-lg">
         RND
       </button>
     </div>
@@ -20,8 +21,19 @@ const Counter = ({ counter, inc, dec, rnd }) => {
 
 const mapStateToProps = (state) => {
   return {
-    counter: state
-  }
-}
+    counter: state,
+  };
+};
 
-export default connect(mapStateToProps)(Counter);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    inc: () => dispatch(inc()),
+    dec: () => dispatch(dec()),
+    rnd: () => {
+      const randomValue = Math.floor(Math.random() * 10);
+      dispatch(rnd(randomValue))
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
